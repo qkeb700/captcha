@@ -6,8 +6,13 @@ import java.awt.Font;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import nl.captcha.Captcha;
+import static nl.captcha.Captcha.NAME;
+import nl.captcha.text.producer.NumbersAnswerProducer;
+import nl.captcha.text.renderer.DefaultWordRenderer;
+import nl.captcha.backgrounds.GradiatedBackgroundProducer;
 
-public class CaptcCha {
+public class CaptCha {
 	private static final long serialVersionUID = 1L;
 	private static int width = 150;
 	private static int height = 50;
@@ -20,5 +25,8 @@ public class CaptcCha {
 		fontList.add(new Font("", Font.PLAIN, 40));
 		List<Color> colorList = new ArrayList<Color>();
 		colorList.add(Color.green);
+		
+		Captcha captcha = new Captcha.Builder(width, height)
+				.addText(new NumbersAnswerProducer(6), new DefaultWordRenderer(colorList, fontList));
 	}
 }
