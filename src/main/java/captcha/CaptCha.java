@@ -11,6 +11,8 @@ import static nl.captcha.Captcha.NAME;
 import nl.captcha.text.producer.NumbersAnswerProducer;
 import nl.captcha.text.renderer.DefaultWordRenderer;
 import nl.captcha.backgrounds.GradiatedBackgroundProducer;
+import nl.captcha.gimpy.DropShadowGimpyRenderer;
+import nl.captcha.servlet.CaptchaServletUtil;
 
 public class CaptCha {
 	private static final long serialVersionUID = 1L;
@@ -27,6 +29,13 @@ public class CaptCha {
 		colorList.add(Color.green);
 		
 		Captcha captcha = new Captcha.Builder(width, height)
-				.addText(new NumbersAnswerProducer(6), new DefaultWordRenderer(colorList, fontList));
+				.addText(new NumbersAnswerProducer(6), new DefaultWordRenderer(colorList, fontList))
+				.gimp(new DropShadowGimpyRenderer()).gimp()
+				.addNoise().addBorder()
+				.addBackground(new GradiatedBackgroundProducer())
+				.build();
+		
+		req.getSession().setAttribute(NAME, captcha);
+		CaptchaServletUtil.writeImage(res, captcha.getImage());
 	}
 }
