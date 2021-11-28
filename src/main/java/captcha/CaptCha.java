@@ -35,6 +35,7 @@ public class CaptCha {
 				.addBackground(new GradiatedBackgroundProducer())
 				.build();
 		
+		//JSP에서 Captcha 객체에 접근할 수 있도록 session에 저장.
 		req.getSession().setAttribute(NAME, captcha);
 		CaptchaServletUtil.writeImage(res, captcha.getImage());
 	}
